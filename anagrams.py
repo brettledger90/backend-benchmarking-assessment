@@ -24,7 +24,7 @@ def alphabetize(string):
         abc
 
     """
-    return "".join(sorted(string.lower()))
+    return "".join(sorted(string))
 
 
 def find_anagrams(words):
@@ -39,20 +39,21 @@ def find_anagrams(words):
         {'dgo': ['dog'], 'act': ['cat', 'act']}
 
     """
-    anagrams = {
-        alphabetize(word): [
-            w for w in words
-            if alphabetize(w) == alphabetize(word)]
-        for word in words}
-    return anagrams
-
+    anagrams = {}
+    for i in words:
+        a = alphabetize(i)
+        try:
+            anagrams[a].append(i)
+        except:
+            anagrams[a] = [i]
+    return anagrams    
 
 if __name__ == "__main__":
     # run find anagrams of first argument
     if len(sys.argv) < 2:
-        print "Please specify a word file!"
+        print ("Please specify a word file!")
         sys.exit(1)
     else:
         with open(sys.argv[1], 'r') as handle:
             words = handle.read().split()
-            print find_anagrams(words)
+            print( find_anagrams(words))
